@@ -406,7 +406,7 @@ void update_current() {
         }
         else
             XSetWindowBorder(dis,c->win,win_unfocus);
-            XSync(dis, False);
+           XSync(dis, False);
 }
 
 /* **************************** Desktop Management ************************************* */
@@ -459,34 +459,34 @@ void tile() {
 
     // If only one window
     if(head != NULL && head->next == NULL) {
-        XMoveResizeWindow(dis,head->win,0,0,sw-4,sh-4);
+        XMoveResizeWindow(dis,head->win,0,PANEL_HEIGHT,sw-4,sh-4);
     }
     else if(head != NULL) {
         switch(mode) {
             case 0: /* Horizontal */
                 // Master window
-                XMoveResizeWindow(dis,head->win,0,0,sw-4,master_size - BORDER_WIDTH);
+                XMoveResizeWindow(dis,head->win,0,PANEL_HEIGHT,sw-4,master_size - BORDER_WIDTH);
 
                 // Stack
                 for(c=head->next;c;c=c->next) ++n;
                 for(c=head->next;c;c=c->next) {
-                    XMoveResizeWindow(dis,c->win,x,master_size + BORDER_WIDTH,(sw/n) - BORDER_WIDTH,sh-master_size - (2 * BORDER_WIDTH));
+                    XMoveResizeWindow(dis,c->win,x,master_size + BORDER_WIDTH + PANEL_HEIGHT,(sw/n) - BORDER_WIDTH,sh-master_size - (2 * BORDER_WIDTH));
                     x += sw/n;
                 }
                 break;
             case 1: /* Fullscreen */
                 for(c=head;c;c=c->next) {
-                    XMoveResizeWindow(dis,c->win,0,0,sw,sh);
+                    XMoveResizeWindow(dis,c->win,0,PANEL_HEIGHT,sw - BORDER_WIDTH ,sh - BORDER_WIDTH);
                 }
                 break;
             case 2: /* Vertical */
                 // Master window
-                XMoveResizeWindow(dis,head->win,0,0,master_size - BORDER_WIDTH,sh - BORDER_WIDTH);
+                XMoveResizeWindow(dis,head->win,0,PANEL_HEIGHT,master_size - BORDER_WIDTH,sh - BORDER_WIDTH);
 
                 // Stack
                 for(c=head->next;c;c=c->next) ++n;
                 for(c=head->next;c;c=c->next) {
-                    XMoveResizeWindow(dis,c->win,master_size + BORDER_WIDTH,x,sw-master_size-(2*BORDER_WIDTH),(sh/n) - BORDER_WIDTH);
+                    XMoveResizeWindow(dis,c->win,master_size + BORDER_WIDTH,x + PANEL_HEIGHT,sw-master_size-(2*BORDER_WIDTH),(sh/n) - BORDER_WIDTH);
                     x += sh/n;
                 }
                 break;
