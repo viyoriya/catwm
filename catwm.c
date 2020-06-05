@@ -127,6 +127,7 @@ static void deletewindow(Window w); //imported from monsterwm.c
 static Bool running = True;
 static void wea(); //stupid quick and dirty anti not focus
 static void client_to_desktop(const Arg arg); // to move window to any desktop, especified.
+static void rotate_desktop(const Arg arg);    // Added by VJ imported from dminiwm - rotate desktop
 
 // Include configuration file (need struct key)
 #include "config.h"
@@ -269,7 +270,7 @@ void move_down() {
 void move_up() {
     Window tmp;
     if(current == NULL || current->prev == head || current->win == head->win) {
-        fprintf(stdout, "%s\n","move_up not gonna be used");
+        ///fprintf(stdout, "%s\n","move_up not gonna be used");
         return;
     }
     tmp = current->win;
@@ -407,9 +408,20 @@ void update_current() {
         else
             XSetWindowBorder(dis,c->win,win_unfocus);
            XSync(dis, False);
+
 }
 
 /* **************************** Desktop Management ************************************* */
+
+
+void rotate_desktop(const Arg arg) {
+    Arg a = {.i = (current_desktop + DESKTOPS + arg.i) % DESKTOPS};
+    printf("%d\n",a.i );
+    fflush(stdout);
+    change_desktop(a);
+}
+
+
 void change_desktop(const Arg arg) {
     client *c;
 
@@ -605,7 +617,7 @@ void destroynotify(XEvent *e) {
 }
 
 void die(const char* e) {
-    fprintf(stdout,"catwm-0.0.5: %s\n",e);
+    ///fprintf(stdout,"catwm-0.0.5: %s\n",e);
     exit(1);
 }
  
@@ -629,7 +641,7 @@ void maprequest(XEvent *e) {
 void catkill() {
         //Close connection to X, dwm style :)
         XCloseDisplay(dis);
-        fprintf(stdout, "catwm-0.0.5: You are killed me!\n");
+        ///fprintf(stdout, "catwm-0.0.5: You are killed me!\n");
         die("forced shutdown");
 }
 
@@ -696,7 +708,7 @@ void setup() {
     change_desktop(arg);
     // To catch maprequest and destroynotify (if other wm running)
     XSelectInput(dis,root,SubstructureNotifyMask|SubstructureRedirectMask);
-    fprintf(stdout,"\n\n catwm-0.0.5: We're up and running!\n");
+    ///fprintf(stdout,"\n\n catwm-0.0.5: We're up and running!\n");
     update_current();
 }
 
@@ -733,7 +745,7 @@ void wea() {
 
 //for logging events...
 void logger(const char* e) {
-    fprintf(stderr,"\n\033[0;34m:: catwm-0.0.5 : %s \033[0;m\n", e);
+    ///fprintf(stderr,"\n\033[0;34m:: catwm-0.0.5 : %s \033[0;m\n", e);
 }
 
 /* There's no way to check accesses to destroyed windows, thus those cases are ignored (especially on UnmapNotify's).  Other types of errors call Xlibs default error handler, which may call exit.  */

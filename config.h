@@ -37,6 +37,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#define DESKTOPS        10  // Added for rotate_desktop method - vj
+
 /* Mod (Mod1 == alt) and master size
    and I added panel size and  the windows key (Mod4 == Super)
    added shortcuts for different tiling modes
@@ -54,6 +56,14 @@
 #define FOCUS           "#956671" // pinkish
 #define UNFOCUS         "#5e81ac" // blueish
 
+static const char dmenufont[]       = "Iosevka:style=Bold:pixelsize=12"; 
+static const char col_gray1[]       = "#2E3440";
+static const char col_gray3[]       = "#929496";
+static const char col_cyan[]        = "#7d7f82"; 
+static const char col_gray4[]       = "#010b13";
+
+static char dmenumon[2]       =   "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char *dmenucmd[]   = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 const char* termcmd[]       = { "st",NULL};
 const char* chromecmd[]     = { "google-chrome-stable", NULL };
 const char* rangercmd[]     = { "st","-e","ranger", NULL };
@@ -64,7 +74,9 @@ const char* rofiwindowcmd[] = { "rofi","-show","window", NULL };
 const char* lockcmd[]  		  = { "/bin/sh","-c","~/.config/catwm/power-menu.sh", NULL};
 const char* volumeUp[]    	= {	"amixer","sset","Master","5%+",NULL};
 const char* volumeDown[]  	= {	"amixer","sset","Master","5%-",NULL};
-
+// for reboot and shutdown
+const char* rebootcmd[]     = {"sudo","reboot",NULL};
+const char* shutdowncmd[]   = {"sudo","shutdown","-h","now",NULL};
 
 // Avoid multiple paste
 #define DESKTOPCHANGE(K,N) \
@@ -87,9 +99,8 @@ static struct key keys[] = {
     {  MOD4,   			     XK_k,            move_down,      	 {NULL}},
     {  MOD4,   			     XK_m,            swap_master,    	 {NULL}},
     {  MOD4,             XK_Tab,          next_win,       	 {NULL}},
-    {  MOD4,             XK_p,            prev_win,       	 {NULL}},
-    {  MOD4,             XK_Left,         next_win,          {NULL}},
-    {  MOD4,             XK_Right,        prev_win,          {NULL}},    
+    {  MOD4,             XK_Right,        rotate_desktop,    {.i = 1}},
+    {  MOD4,             XK_Left,         rotate_desktop,    {.i = -1}},     
     {  MOD4,             XK_F2,           spawn,          	 {.com = chromecmd}},
     {  MOD4,             XK_F3,           spawn,          	 {.com = rangercmd}},   
     {  MOD4,             XK_F4,           spawn,          	 {.com = sublcmd}},       
@@ -97,6 +108,7 @@ static struct key keys[] = {
     {  MOD4,             XK_Return,       spawn,          	 {.com = termcmd}},
     {  MOD4,             XK_r,            spawn,          	 {.com = rofiruncmd}},
     {  MOD4,             XK_w,            spawn,          	 {.com = rofiwindowcmd}},
+    {  MOD4,             XK_p,            spawn,             {.com = dmenucmd}},  
     {  MOD4,             XK_0,            spawn,          	 {.com = lockcmd}},
     {  MOD4,             XK_F1,           spawn,          	 {.com = volumeUp}},
 // Windows Key + shift + shortcut
