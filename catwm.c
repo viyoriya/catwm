@@ -215,6 +215,11 @@ void client_to_desktop(const Arg arg) {
 
     tile();
     update_current();
+    
+    //Added for desktop number for panel display
+    //printf("%d\n",arg.i );
+    //fflush(stdout);
+ 
     change_desktop(arg);
 }
 
@@ -416,8 +421,8 @@ void update_current() {
 
 void rotate_desktop(const Arg arg) {
     Arg a = {.i = (current_desktop + DESKTOPS + arg.i) % DESKTOPS};
-    printf("%d\n",a.i );
-    fflush(stdout);
+//    printf("%d\n",a.i );
+//    fflush(stdout);
     change_desktop(a);
 }
 
@@ -443,6 +448,10 @@ void change_desktop(const Arg arg) {
     if(head != NULL)
         for(c=head;c;c=c->next)
             XMapWindow(dis,c->win);
+
+    //Added to display desktop number in panel display
+    printf("D:%d\n",arg.i+1 );
+    fflush(stdout);
 
     tile();
     update_current();
@@ -668,7 +677,7 @@ void setup() {
 
     // Screen width and height
     sw = XDisplayWidth(dis,screen) - BORDER_WIDTH;
-    sh = XDisplayHeight(dis,screen) - PANEL_HEIGHT - BORDER_WIDTH;
+    sh = XDisplayHeight(dis,screen) - (PANEL_HEIGHT + BORDER_WIDTH);
 
     // Colors
     win_focus = getcolor(FOCUS);
@@ -709,6 +718,12 @@ void setup() {
     // To catch maprequest and destroynotify (if other wm running)
     XSelectInput(dis,root,SubstructureNotifyMask|SubstructureRedirectMask);
     ///fprintf(stdout,"\n\n catwm-0.0.5: We're up and running!\n");
+
+    //Added to display desktop number in panel display
+    printf("D:%d\n",arg.i+1 );
+    fflush(stdout);
+
+ 
     update_current();
 }
 
@@ -803,25 +818,29 @@ void cleanup(void) {
 int main(int argc, char **argv) {
     //exported from dwm.c
     if(argc == 2 && !strcmp("-v", argv[1]))
-	die("© 2010 pyknite, © 2014-2015 Dj_Dexter, see LICENSE for details\n");
+    	die("© 2010 pyknite, © 2014-2015 Dj_Dexter, see LICENSE for details\n");
     else if(argc != 1)
-	die("usage: catwm [-v]\n");
+	    die("usage: catwm [-v]\n");
+    
     // Open display   
     if(!(dis = XOpenDisplay(NULL))) {
         die("Cannot open display!");
     }
+    
     // X error handler (if other wm is running in the same display)
     XSetErrorHandler(xerror);
     
     // Setup env
     setup();
+    
     // Start wm
     start();
     cleanup();
+    
     //quick and dirty anti not focus
     wea();
     // Close display
-//    XCloseDisplay(dis);
-
+    // XCloseDisplay(dis);
+ 
     return 0;
 }

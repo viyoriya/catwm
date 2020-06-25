@@ -37,48 +37,42 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-
+#define DESKTOPS        10  // Added for rotate_desktop method - vj
 
 /* Mod (Mod1 == alt) and master size
    and I added panel size and  the windows key (Mod4 == Super)
    added shortcuts for different tiling modes
    added shortcuts for moving the window to the next workspace and back
    */
-//#define MOD1                  Mod1Mask
-#define MOD4                    Mod4Mask
-#define MASTER_SIZE             0.5
-#define PANEL_HEIGHT            18
-#define BORDER_WIDTH            2
-#define ATTACH_ASIDE            1 /* 0=TRUE, 1=New window is master */
-#define DEFAULT_MODE            2 /* 0 = Horizontal, 1 = Fullscreen, 2 = Vertical */
-
-#define DESKTOPS                10  // Added for rotate_desktop method - vj
+//#define MOD1            Mod1Mask
+#define MOD4            Mod4Mask
+#define MASTER_SIZE     0.6
+#define PANEL_HEIGHT    18
+#define BORDER_WIDTH    3
+#define ATTACH_ASIDE    1 /* 0=TRUE, 1=New window is master */
+#define DEFAULT_MODE    2 /* 0 = Horizontal, 1 = Fullscreen, 2 = Vertical */
 
 // Colors
-#define FOCUS                   "#956671" // pinkish
-#define UNFOCUS                 "#5e81ac" // blueish
+#define FOCUS           "#956671" // pinkish
+#define UNFOCUS         "#5e81ac" // blueish
 
-static const char dmenufont[]   = "Iosevka:style=Bold:pixelsize=12"; 
-static const char col_gray1[]   = "#2E3440";
-static const char col_gray3[]   = "#929496";
-static const char col_cyan[]    = "#7d7f82"; 
-static const char col_gray4[]   = "#010b13";
+static const char dmenufont[]      = "Iosevka:style=Bold:pixelsize=12"; 
+static const char col_gray1[]      = "#2E3440";
+static const char col_gray3[]      = "#929496";
+static const char col_cyan[]       = "#7d7f82"; 
+static const char col_gray4[]      = "#010b13";
 
-static char dmenumon[2]         = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]   = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-const char* termcmd[]           = { "st",NULL};
-const char* chromecmd[]         = { "google-chrome-stable", NULL };
-const char* rangercmd[]         = { "st","-e","ranger", NULL };
-const char* sublcmd[]           = { "subl", NULL };
-const char* firefoxcmd[]  	    = { "firefox",NULL};
-const char* rofiruncmd[]        = { "rofi","-show","drun", NULL };
-const char* rofiwindowcmd[]     = { "rofi","-show","window", NULL };
-const char* lockcmd[]  		    = { "/bin/sh","-c","~/.config/catwm/power-menu.sh", NULL};
-const char* volumeUp[]    	    = {	"amixer","sset","Master","5%+",NULL};
-const char* volumeDown[]  	    = {	"amixer","sset","Master","5%-",NULL};
-// for reboot and shutdown
-const char* rebootcmd[]         = {"sudo","reboot",NULL};
-const char* shutdowncmd[]       = {"sudo","shutdown","-h","now",NULL};
+static char dmenumon[2]            =   "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char* termcmd[]       = { "st",NULL};
+static const char* chromecmd[]     = { "google-chrome-stable", NULL };
+static const char* rangercmd[]     = { "st","-e","ranger", NULL };
+static const char* sublcmd[]       = { "subl", NULL };
+static const char* firefoxcmd[]    = { "firefox",NULL};
+static const char* rofiruncmd[]    = { "rofi","-show","drun", NULL };
+static const char* rofiwindowcmd[] = { "rofi","-show","window", NULL };
+static const char* volumeUp[]      = { "amixer","sset","Master","5%+",NULL};
+static const char* volumeDown[]    = { "amixer","sset","Master","5%-",NULL};
 
 // Avoid multiple paste
 #define DESKTOPCHANGE(K,N) \
@@ -90,15 +84,15 @@ const char* shutdowncmd[]       = {"sudo","shutdown","-h","now",NULL};
 
 // Shortcuts
 static struct key keys[] = {
-    // MOD               KEY              FUNCTION       	    ARGS
+    // MOD               KEY              FUNCTION       	 ARGS
     {  MOD4,             XK_i,            increase,       	 {NULL}},
     {  MOD4,             XK_d,            decrease,       	 {NULL}},
     {  MOD4,   		     XK_v,            switch_vertical,	 {NULL}},
     {  MOD4,   			 XK_h,            switch_horizontal, {NULL}},    
     {  MOD4,             XK_f,            toggle_fullscreen, {NULL}},
     {  MOD4,   			 XK_q,            kill_client,    	 {NULL}},
-    {  MOD4,   			 XK_j,            move_up,        	 {NULL}},
-    {  MOD4,   			 XK_k,            move_down,      	 {NULL}},
+    {  MOD4,   			 XK_k,            move_up,        	 {NULL}},
+    {  MOD4,   			 XK_j,            move_down,      	 {NULL}},
     {  MOD4,   			 XK_m,            swap_master,    	 {NULL}},
     {  MOD4,             XK_Tab,          next_win,       	 {NULL}},
     {  MOD4,             XK_Right,        rotate_desktop,    {.i = 1}},
@@ -111,12 +105,12 @@ static struct key keys[] = {
     {  MOD4,             XK_r,            spawn,          	 {.com = rofiruncmd}},
     {  MOD4,             XK_w,            spawn,          	 {.com = rofiwindowcmd}},
     {  MOD4,             XK_p,            spawn,             {.com = dmenucmd}},  
-    {  MOD4,             XK_0,            spawn,          	 {.com = lockcmd}},
+    {  MOD4,             XK_0,            spawn,          	 CMD("~/.config/catwm/power-menu.sh")},
     {  MOD4,             XK_F1,           spawn,          	 {.com = volumeUp}},
-// Windows Key + shift + shortcut
+    // Windows Key + shift + shortcut
     {  MOD4|ShiftMask,   XK_F1,           spawn,         	 {.com = volumeDown}},            
     {  MOD4|ShiftMask,	 XK_q,            catkill,        	 {NULL}},
-	{  MOD4,       		 XK_Print,  	  spawn,          	 CMD("~/.config/catwm/screenshot.sh")},
+	{  MOD4,             XK_Print,  	  spawn,          	 CMD("~/.config/catwm/screenshot.sh")},
 	{  MOD4|ShiftMask,   XK_Print,  	  spawn,          	 CMD("~/.config/catwm/screenshot-w.sh")},	       
        DESKTOPCHANGE(    XK_1,                               0)
        DESKTOPCHANGE(    XK_2,                               1)

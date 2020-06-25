@@ -7,7 +7,7 @@
 #xsetroot -cursor_name left_ptr &
 xsetroot -xcf /usr/share/icons/Adwaita/cursors/left_ptr 16 &
 compton -e 0.92 -o 0.92 -b &
-feh --bg-scale ~/Pictures/wallpapers/u_muhahah_the_sixer_5.jpg &
+feh --bg-scale ~/Pictures/Wallpapers/u_muhahah_the_sixer_5.jpg &
 dunst -conf ~/.config/dunst/dunstrc &
 notify-send -u low "Solus catwm" "All right" -i ~/.config/catwm/Solus.png &
 
@@ -43,9 +43,11 @@ function status {
 ff="/tmp/$RANDOM.catwm.fifo"
 [[ -p $ff ]] || mkfifo -m 600 "$ff"
 
-while read -t 30 -r wmout || true; do
+while read -r wmout || true; do
+    num="$(echo $wmout | sed -n 's/D://p')"
+    [ ! -z "$num" ] && desktopNum=$num
 
-    printf "%s%s%s\n" "%{l} $wmout%{F#FF62FF00}$(riya) %{F#FF929496}$(catFocus)" "%{r}$(status)"
+    printf "%s%s%s\n" "%{l} $desktopNum%{F#FF62FF00}$(riya) %{F#FF929496}$(catFocus)" "%{r}$(status)"
    #sleep 5s
 done < "$ff" | lemonbar -d -g x18xx -u 3 -n "catwm" -B "#FF1F222D" -f "monospace:size=9" -f "Font Awesome 5 Brands Regular:style=Regular:size=9" -f "Font Awesome 5 Free Solid:style=Solid:size=9" &
 
