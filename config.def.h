@@ -46,9 +46,9 @@
    */
 //#define MOD1            Mod1Mask
 #define MOD4            Mod4Mask
-#define MASTER_SIZE     0.6
+#define MASTER_SIZE     0.55
 #define PANEL_HEIGHT    18
-#define BORDER_WIDTH    3
+#define BORDER_WIDTH    2
 #define ATTACH_ASIDE    1 /* 0=TRUE, 1=New window is master */
 #define DEFAULT_MODE    2 /* 0 = Horizontal, 1 = Fullscreen, 2 = Vertical */
 
