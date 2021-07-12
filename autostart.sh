@@ -21,8 +21,8 @@ WH=F#FF929496
 NEON=F#FF986671
 
 
-function riya(){
-        echo -e "    RIYA VIJAY   "
+function name(){
+        echo -e "    VIYORIYA   "
 }
 
 function catFocus(){
@@ -110,7 +110,7 @@ do
         [ ! -z "$num" ] && export desktopNum=$num
     fi    
     
-    printf "%s%s\n" "%{l}  $desktopNum%{F#FF62FF00}$(riya) %{F#FF929496}$(catFocus)" "%{r}$(status)"
+    printf "%s%s\n" "%{l}  $desktopNum%{F#FF62FF00}$(name) %{F#FF929496}$(catFocus)" "%{r}$(status)"
     sleep 3s
 done < "$ff" | lemonbar -p -d -g x21x1 -u 2 -o -1  -n "catwm" -B "#FF1F222D" -f "Iosevka:style=Bold:size=10" -f "Font Awesome 5 Brands Regular:style=Regular:size=11" -f "Font Awesome 5 Free Solid:style=Solid:size=11" &
 
