@@ -7,6 +7,11 @@ UPDATED
  4. Unwanted code removed
  5. install dmenu,xmenu,xmenu-apps,alsa,ufw 
 
+#### screen shot
+ 
+![dlist](https://github.com/viyoriya/catwm/blob/main/screenshots/2021-07-12-21-52-54.png)
+
+
 CATWM
 =====
 
