@@ -5,7 +5,7 @@ UPDATED
  2. rotate desktop
  3. Fixed Bug -  moving windows to other desktops
  4. Unwanted code removed
-
+ 5. install dmenu,xmenu,xmenu-apps,alsa,ufw 
 
 CATWM
 =====
