@@ -9,8 +9,7 @@ UPDATED
 
 #### screen shot
  
-![dlist](https://github.com/viyoriya/catwm/blob/main/screenshots/2021-07-12-21-52-54.png)
-
+![Catwm](https://github.com/viyoriya/catwm/blob/master/screenshots/2021-07-12-21-52-54.png)
 
 CATWM
 =====
